@@ -2,26 +2,154 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+body,
+html {
+  height: 100%;
+  margin: 0;
+  background-color: #1d232a;
+  color: #a6adbb;
 }
+#__next,
+#root {
+  height: 100%;
+}
+@layer components {
+  .input {
+    @apply bg-white text-black h-10 px-2 placeholder-stone-500 rounded-lg;
+  }
+  .input:focus {
+    @apply outline-blue-800;
+  }
+  .btn {
+    @apply font-semibold no-underline gap-2 inline-flex flex-shrink-0 cursor-pointer select-none flex-wrap items-center justify-center border-transparent text-center transition duration-200 ease-in-out rounded-md h-10 px-4 text-sm min-h-[2rem];
+    line-height: 1em;
+    border-width: 1px;
+    animation: button-pop 0.25s ease-out;
+    text-transform: uppercase;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    &:active:hover,
+    &:active:focus {
+      animation: button-pop 0s ease-out;
+      transform: scale(0.97);
+    }
+
+    @apply border-base-200 bg-base-200 text-base-content no-underline outline-base-content;
+
+    @media (hover: hover) {
+      &:hover {
+        @apply border-base-300 bg-base-300;
+      }
+    }
+    &-active {
+      @apply border-primary bg-primary text-primary-content;
+      @apply appearance-none;
+      @media (hover: hover) {
+        &:hover {
+          @apply border-primary bg-primary;
+        }
+      }
+      &:focus-visible {
+        @apply outline-primary;
+      }
+    }
+    &:focus-visible {
+      @apply outline outline-2 outline-offset-2;
+    }
+    &-primary {
+      @apply border-primary bg-primary text-primary-content outline-primary;
+    }
+    /* disabled */
+    &-disabled,
+    &[disabled],
+    &:disabled {
+      @apply pointer-events-none;
+    }
+  }
+
+  .chat {
+    @apply grid grid-cols-2 gap-x-3 py-1;
+    &-bubble {
+      @apply block w-fit px-4 py-2 relative bg-neutral text-neutral-content rounded-md overflow-hidden text-ellipsis;
+      max-width: 90%;
+      min-height: 2.75rem;
+      min-width: 2.75rem;
+      &:before {
+        @apply w-3 h-3 absolute bottom-0;
+        background-color: inherit;
+        content: "";
+        mask-size: contain;
+        mask-repeat: no-repeat;
+        mask-position: center;
+      }
+      /* brand colors */
+      &-primary {
+        @apply bg-primary text-primary-content;
+      }
+      &-secondary {
+        @apply bg-secondary text-secondary-content;
+      }
+      &-accent {
+        @apply bg-accent text-accent-content;
+      }
+      &-start {
+        @apply place-items-start;
+        .chat-bubble {
+          @apply col-start-2;
+          &:before {
+            mask-image: url("data:image/svg+xml,%3csvg width='3' height='3' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill='black' d='m 0 3 L 3 3 L 3 0 C 3 1 1 3 0 3'/%3e%3c/svg%3e");
+            [dir="rtl"] & {
+              mask-image: url("data:image/svg+xml,%3csvg width='3' height='3' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill='black' d='m 0 3 L 1 3 L 3 3 C 2 3 0 1 0 0'/%3e%3c/svg%3e");
+            }
+          }
+        }
+      }
+    }
+    &-end {
+      @apply place-items-end;
+      grid-template-columns: 1fr auto;
+      .chat-bubble {
+        @apply col-start-1;
+        &:before {
+          mask-image: url("data:image/svg+xml,%3csvg width='3' height='3' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill='black' d='m 0 3 L 1 3 L 3 3 C 2 3 0 1 0 0'/%3e%3c/svg%3e");
+          [dir="rtl"] & {
+            mask-image: url("data:image/svg+xml,%3csvg width='3' height='3' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill='black' d='m 0 3 L 3 3 L 3 0 C 3 1 1 3 0 3'/%3e%3c/svg%3e");
+          }
+        }
+      }
+    }
+    &-end .chat-bubble {
+      @apply rounded-br-none;
+      &:before {
+        left: 100%;
+      }
+    }
+    &-start .chat-bubble {
+      @apply rounded-bl-none;
+      &:before {
+        left: -0.75rem;
+      }
+    }
+  }
+  .scroll::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+  .scroll::-webkit-scrollbar-thumb {
+    @apply bg-base-300 rounded-md;
+  }
+  .scroll::-webkit-scrollbar-track {
+    @apply bg-base-content rounded-md;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+@keyframes button-pop {
+  0% {
+    transform: scale(0.98);
+  }
+  40% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
