@@ -8,8 +8,8 @@ import Messages from "@/components/Messages";
 const Page = () => {
   const clientSocket = useSocketIoClient();
   const isSocketConnected = useIsSocketConnected();
-
   const userId = clientSocket?.userId;
+
   const [message, setMessage] = useState<string>("");
   const [messages, setMessages] = useState<
     { message: string; userId: string }[]
@@ -44,7 +44,11 @@ const Page = () => {
           <span className="text-yellow-400 "> Please Waiting ....</span>
         )}
       </div>
-      <Messages messages={messages} userId={userId} />
+      <Messages
+        isSocketConnected={isSocketConnected}
+        messages={messages}
+        userId={userId}
+      />
       <div className="mt-4">
         <input
           onChange={(e) => setMessage(e.target.value)}
