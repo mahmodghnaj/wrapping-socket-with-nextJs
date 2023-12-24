@@ -1,9 +1,13 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { useSocketIoClient } from "@/hooks/useSocketIoClient";
+import {
+  useIsSocketConnected,
+  useSocketIoClient,
+} from "@/hooks/useSocketIoClient";
 import Messages from "@/components/Messages";
 
 const Page = () => {
   const clientSocket = useSocketIoClient();
+  const isSocketConnected = useIsSocketConnected();
 
   const userId = clientSocket?.userId;
   const [message, setMessage] = useState<string>("");
@@ -31,7 +35,15 @@ const Page = () => {
 
   return (
     <div className="h-full w-full  flex flex-col justify-center items-center">
-      <div className="mb-4 text-green-400 font-bold text-lg ">Online</div>
+      <div className="mb-4 font-bold text-lg">
+        {isSocketConnected ? (
+          <>
+            <span className="text-green-400 ">Online</span>
+          </>
+        ) : (
+          <span className="text-yellow-400 "> Please Waiting ....</span>
+        )}
+      </div>
       <Messages messages={messages} userId={userId} />
       <div className="mt-4">
         <input
@@ -41,6 +53,7 @@ const Page = () => {
           type="text"
           className="input"
           placeholder="Type a message..."
+          disabled={!isSocketConnected}
         />
         <button
           disabled={!message.trim()}
