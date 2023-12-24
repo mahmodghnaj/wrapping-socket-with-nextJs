@@ -1,41 +1,60 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Socket.IO Connection with Custom React Hook in Next.js
+
+## Overview
+
+This repository demonstrates a simple implementation of integrating Socket.IO connections into a Next.js project using a custom React Hook. The goal is to establish a WebSocket connection between the client and server, allowing real-time communication.
+
+## Contents
+
+Socket.IO Client Implementation (socket-client.ts)
+
+A Socket.IO client class encapsulating the WebSocket connection.
+The class extends the EventEmitter to handle custom events.
+Implements methods for subscribing to events, sending messages, and checking connection status.
+Socket.IO Context and Provider (SocketIoProvider.tsx)
+
+A React context to manage the Socket.IO client's state.
+A provider component (ProvideSocketIoClient) that initializes and provides the Socket.IO client using the custom hook.
+Singleton Design Pattern
+
+The custom hook (useProvideSocketIoClient) is designed following the singleton pattern.
+Ensures a single instance of the Socket.IO client is created and reused throughout the application.
+Custom Hooks for Consuming Socket.IO Client (useSocketIoClient.ts)
+
+useSocketIoClient: A hook to access the Socket.IO client instance within components.
+useIsSocketConnected: A hook to check the connection status.
 
 ## Getting Started
 
-First, run the development server:
+1-Clone the repository:
+
+```bash
+git clone https://github.com/mahmodghnaj/wrapping-socket-with-nextJs
+cd wrapping-socket-with-nextJs
+```
+
+2 Install dependencies:
+
+```bash
+npm install
+```
+
+Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open your browser and navigate to http://localhost:3000 to see the Socket.IO connection in action.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Demo
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- (https://wrapping-socket-with-next-js.vercel.app/).
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Screenshots
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+<img width="1552" alt="loading" src="/public/1.jpeg">
 
-## Learn More
+<img width="1552" alt="online" src="/public/2.jpeg">
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-# wrapping-socket-with-nextJs
+<img width="1552" alt="chat" src="/public/3.jpeg">
